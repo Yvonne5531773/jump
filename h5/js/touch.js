@@ -440,6 +440,7 @@
 			return;
 		if (info.preventDefault && cr.isCanvasInputEvent(info))
 			info.preventDefault();
+		console.log('onPointerEnd isCancel', isCancel)
 		var i = this.findTouch(info["pointerId"]);
 		this.trigger_index = (i >= 0 ? this.touches[i].startindex : -1);
 		this.trigger_id = (i >= 0 ? this.touches[i]["id"] : -1);
@@ -477,6 +478,7 @@
 	instanceProto.onTouchStart = function (info) {
 		if (info.preventDefault && cr.isCanvasInputEvent(info))
 			info.preventDefault();
+		console.log('onTouchStart')
 		var offset = this.runtime.isDomFree ? dummyoffset : offsetFun(this.runtime.canvas)
 		var nowtime = cr.performance_now();
 		this.runtime.isInUserInputEvent = true;
