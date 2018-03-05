@@ -1448,4 +1448,111 @@ cr.behaviors = {};
 			return true;
 		return false;
 	};
+	cr.system_object = function (runtime)
+	{
+		this.runtime = runtime;
+		this.waits = [];
+	};
+	cr.system_object.prototype.saveToJSON = function ()
+	{
+		var o = {};
+		var i, len, j, lenj, p, w, t, sobj;
+		o["waits"] = [];
+		var owaits = o["waits"];
+		var waitobj;
+		for (i = 0, len = this.waits.length; i < len; i++)
+		{
+			w = this.waits[i];
+			waitobj = {
+				"t": w.time,
+				"st": w.signaltag,
+				"s": w.signalled,
+				"ev": w.ev.sid,
+				"sm": [],
+				"sols": {}
+			};
+			if (w.ev.actions[w.actindex])
+				waitobj["act"] = w.ev.actions[w.actindex].sid;
+			for (j = 0, lenj = w.solModifiers.length; j < lenj; j++)
+				waitobj["sm"].push(w.solModifiers[j].sid);
+			for (p in w.sols)
+			{
+				if (w.sols.hasOwnProperty(p))
+				{
+					t = this.runtime.types_by_index[parseInt(p, 10)];
+					;
+					sobj = {
+						"sa": w.sols[p].sa,
+						"insts": []
+					};
+					for (j = 0, lenj = w.sols[p].insts.length; j < lenj; j++)
+						sobj["insts"].push(w.sols[p].insts[j].uid);
+					waitobj["sols"][t.sid.toString()] = sobj;
+				}
+			}
+			owaits.push(waitobj);
+		}
+		return o;
+	};
+	cr.system_object.prototype.loadFromJSON = function (o)
+	{
+		var owaits = o["waits"];
+		var i, len, j, lenj, p, w, addWait, e, aindex, t, savedsol, nusol, inst;
+		cr.clearArray(this.waits);
+		for (i = 0, len = owaits.length; i < len; i++)
+		{
+			w = owaits[i];
+			e = this.runtime.blocksBySid[w["ev"].toString()];
+			if (!e)
+				continue;	// event must've gone missing
+			aindex = -1;
+			for (j = 0, lenj = e.actions.length; j < lenj; j++)
+			{
+				if (e.actions[j].sid === w["act"])
+				{
+					aindex = j;
+					break;
+				}
+			}
+			if (aindex === -1)
+				continue;	// action must've gone missing
+			addWait = {};
+			addWait.sols = {};
+			addWait.solModifiers = [];
+			addWait.deleteme = false;
+			addWait.time = w["t"];
+			addWait.signaltag = w["st"] || "";
+			addWait.signalled = !!w["s"];
+			addWait.ev = e;
+			addWait.actindex = aindex;
+			for (j = 0, lenj = w["sm"].length; j < lenj; j++)
+			{
+				t = this.runtime.getObjectTypeBySid(w["sm"][j]);
+				if (t)
+					addWait.solModifiers.push(t);
+			}
+			for (p in w["sols"])
+			{
+				if (w["sols"].hasOwnProperty(p))
+				{
+					t = this.runtime.getObjectTypeBySid(parseInt(p, 10));
+					if (!t)
+						continue;		// type must've been deleted
+					savedsol = w["sols"][p];
+					nusol = {
+						sa: savedsol["sa"],
+						insts: []
+					};
+					for (j = 0, lenj = savedsol["insts"].length; j < lenj; j++)
+					{
+						inst = this.runtime.getObjectByUID(savedsol["insts"][j]);
+						if (inst)
+							nusol.insts.push(inst);
+					}
+					addWait.sols[t.index.toString()] = nusol;
+				}
+			}
+			this.waits.push(addWait);
+		}
+	};
 }());
