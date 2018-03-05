@@ -98,14 +98,14 @@
 
 <script>
 	(function () {
-		var canvas = document.createElement('canvas'),
-      div = document.createElement('div')
+		var canvas = document.createElement('canvas')
+//      div = document.createElement('div')
 		canvas.id = 'c2canvas'
-		div.id = 'c2canvasdiv'
+//		div.id = 'c2canvasdiv'
 		canvas.style.width = '414px'
     canvas.style.height = '736px'
-    div.appendChild(canvas)
-		document.body.appendChild(div)
+//    div.appendChild(canvas)
+		document.body.appendChild(canvas)
 		cr_createRuntime("c2canvas")
 	})()
 

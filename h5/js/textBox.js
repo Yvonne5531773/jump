@@ -40,8 +40,12 @@
 		}
 		this.elem.id = this.properties[9];
 		var el = this.runtime.canvasdiv ? this.runtime.canvasdiv : "body"
-		el.append(this.elem)
+		console.log('el', el)
+		console.log('this.elem', this.elem)
+
+		// el.append(this.elem)
 		// $(this.elem).appendTo(this.runtime.canvasdiv ? this.runtime.canvasdiv : "body");
+
 		this.elem["autocomplete"] = "off";
 		this.elem.value = this.properties[0];
 		this.elem["placeholder"] = this.properties[1];
@@ -67,6 +71,7 @@
 			this.elem["oncut"] = onchangetrigger;
 		this.elem.onclick = (function (self) {
 			return function (e) {
+				console.log('click self', self)
 				e.stopPropagation();
 				self.runtime.isInUserInputEvent = true;
 				self.runtime.trigger(cr.plugins_.TextBox.prototype.cnds.OnClicked, self);
@@ -81,43 +86,35 @@
 				self.runtime.isInUserInputEvent = false;
 			};
 		})(this);
-		this.elem.addEventListener("touchstart", function (e) {
-			e.stopPropagation();
-		}, false);
-		this.elem.addEventListener("touchmove", function (e) {
-			e.stopPropagation();
-		}, false);
-		this.elem.addEventListener("touchend", function (e) {
-			e.stopPropagation();
-		}, false);
-		this.elem.addEventListener("mousedown", function (e) {
-			e.stopPropagation();
-		}, false);
-		this.elem.addEventListener("mouseup", function (e) {
-			e.stopPropagation();
-		}, false);
-		this.elem.addEventListener("keydown", function (e) {
-			if (e.which !== 13 && e.which != 27)	// allow enter and escape
-				e.stopPropagation();
-		}, false);
-		this.elem.addEventListener("mousedown", function (e) {
-			if (e.which !== 13 && e.which != 27)	// allow enter and escape
-				e.stopPropagation();
-		}, false);
-		// $(this.elem).mousedown(function (e) {
+		// this.elem.addEventListener("touchstart", function (e) {
+		// 	console.log('touchstart')
 		// 	e.stopPropagation();
-		// });
-		// $(this.elem).mouseup(function (e) {
+		// }, false);
+		// this.elem.addEventListener("touchmove", function (e) {
+		// 	console.log('touchmove')
 		// 	e.stopPropagation();
-		// });
-		// $(this.elem).keydown(function (e) {
+		// }, false);
+		// this.elem.addEventListener("touchend", function (e) {
+		// 	console.log('touchend')
+		// 	e.stopPropagation();
+		// }, false);
+		// this.elem.addEventListener("mousedown", function (e) {
+		// 	console.log('mousedown1')
+		// 	e.stopPropagation();
+		// }, false);
+		// this.elem.addEventListener("mouseup", function (e) {
+		// 	console.log('mouseup')
+		// 	e.stopPropagation();
+		// }, false);
+		// this.elem.addEventListener("keydown", function (e) {
 		// 	if (e.which !== 13 && e.which != 27)	// allow enter and escape
 		// 		e.stopPropagation();
-		// });
-		// $(this.elem).keyup(function (e) {
+		// }, false);
+		// this.elem.addEventListener("mousedown", function (e) {
+		// 	console.log('mousedown2')
 		// 	if (e.which !== 13 && e.which != 27)	// allow enter and escape
 		// 		e.stopPropagation();
-		// });
+		// }, false);
 		this.lastLeft = 0;
 		this.lastTop = 0;
 		this.lastRight = 0;

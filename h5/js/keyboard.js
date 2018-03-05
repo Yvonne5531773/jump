@@ -23,6 +23,7 @@
 		var self = this;
 		if (!this.runtime.isDomFree) {
 			document.addEventListener("keydown", function (info) {
+				console.log('keydown')
 				self.onKeyDown(info);
 			}, false);
 			document.addEventListener("keyup", function (info) {

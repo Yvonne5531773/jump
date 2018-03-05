@@ -180,16 +180,20 @@
 		this.trigger_id = 0;
 		this.getTouchIndex = 0;
 		this.useMouseInput = (this.properties[0] !== 0);
-		var elem = (this.runtime.fullscreen_mode > 0) ? document : this.runtime.canvas;
+		var elem = this.runtime.canvas
+		// var elem = (this.runtime.fullscreen_mode > 0) ? document : this.runtime.canvas;
 		var elem2 = document;
 		if (this.runtime.isDirectCanvas)
 			elem2 = elem = window["Canvas"];
 		else if (this.runtime.isCocoonJs)
 			elem2 = elem = window;
 		var self = this;
+		console.log('touch elem', elem)
+		console.log('touch typeof PointerEvent !== "undefined"', typeof PointerEvent !== "undefined")
 		if (typeof PointerEvent !== "undefined") {
 			elem.addEventListener("pointerdown",
 				function (info) {
+					console.log('pointerdown info', info)
 					self.onPointerStart(info);
 				},
 				false
@@ -202,6 +206,7 @@
 			);
 			elem2.addEventListener("pointerup",
 				function (info) {
+					console.log('pointerup')
 					self.onPointerEnd(info, false);
 				},
 				false
@@ -214,6 +219,7 @@
 			);
 			if (this.runtime.canvas) {
 				this.runtime.canvas.addEventListener("MSGestureHold", function (e) {
+					console.log('MSGestureHold')
 					e.preventDefault();
 				}, false);
 				document.addEventListener("MSGestureHold", function (e) {
@@ -230,6 +236,7 @@
 		else if (window.navigator["msPointerEnabled"]) {
 			elem.addEventListener("MSPointerDown",
 				function (info) {
+					console.log('MSPointerDown')
 					self.onPointerStart(info);
 				},
 				false
@@ -242,6 +249,7 @@
 			);
 			elem2.addEventListener("MSPointerUp",
 				function (info) {
+					console.log('MSPointerUp')
 					self.onPointerEnd(info, false);
 				},
 				false
@@ -264,6 +272,7 @@
 		else {
 			elem.addEventListener("touchstart",
 				function (info) {
+					console.log('touchstart')
 					self.onTouchStart(info);
 				},
 				false
@@ -346,9 +355,11 @@
 		}
 		if (this.useMouseInput && !this.runtime.isDomFree) {
 			document.addEventListener("mousemove", function (info) {
+				console.log('mousemove')
 				self.onMouseMove(info);
 			}, false);
 			document.addEventListener("mousedown", function (info) {
+				console.log('mousedown')
 				self.onMouseDown(info);
 			}, false);
 			document.addEventListener("mouseup", function (info) {
@@ -407,6 +418,9 @@
 		if (info.preventDefault && cr.isCanvasInputEvent(info))
 			info.preventDefault();
 		var offset = this.runtime.isDomFree ? dummyoffset : offsetFun(this.runtime.canvas);
+		console.log('onPointerStart this.runtime.isDomFree', this.runtime.isDomFree)
+		console.log('onPointerStart this.runtime.canvas', this.runtime.canvas)
+		console.log('onPointerStart offset', offset)
 		var touchx = info.pageX - offset.left;
 		var touchy = info.pageY - offset.top;
 		var nowtime = cr.performance_now();

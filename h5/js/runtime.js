@@ -81,6 +81,7 @@
 		}
 		this.isDebug = (typeof cr_is_preview !== "undefined" && window.location.search.indexOf("debug") > -1);
 		this.canvas = canvas;
+		console.log('this.canvas = canvas', canvas)
 		this.canvasdiv = document.getElementById("c2canvasdiv");
 		this.gl = null;
 		this.glwrap = null;
@@ -332,12 +333,14 @@
 		if (this.fullscreen_mode > 0)
 			this["setSize"](window.innerWidth, window.innerHeight, true);
 		this.canvas.addEventListener("webglcontextlost", function (ev) {
+			console.log('webglcontextlost')
 			ev.preventDefault();
 			self.onContextLost();
 			cr.logexport("[Construct 2] WebGL context lost");
 			window["cr_setSuspended"](true);		// stop rendering
 		}, false);
 		this.canvas.addEventListener("webglcontextrestored", function (ev) {
+			console.log('webglcontextrestored')
 			self.glwrap.initState();
 			self.glwrap.setSize(self.glwrap.width, self.glwrap.height, true);
 			self.layer_tex = null;
@@ -477,9 +480,11 @@
 		};
 		if (window != window.top && !this.isDomFree && !this.isWinJS && !this.isWindowsPhone8) {
 			document.addEventListener("mousedown", function () {
+				console.log('mousedown')
 				window.focus();
 			}, true);
 			document.addEventListener("touchstart", function () {
+				console.log('touchstart')
 				window.focus();
 			}, true);
 		}
@@ -517,13 +522,15 @@
 		});
 		if (!this.isDomFree) {
 			var unfocusFormControlFunc = function (e) {
-				if (cr.isCanvasInputEvent(e) && document["activeElement"] && document["activeElement"] !== document.getElementsByTagName("body")[0] && document["activeElement"].blur) {
-					try {
-						document["activeElement"].blur();
-					}
-					catch (e) {
-					}
-				}
+				console.log('unfocusFormControlFunc')
+				// if (cr.isCanvasInputEvent(e) && document["activeElement"] && document["activeElement"] !== document.getElementsByTagName("body")[0] && document["activeElement"].blur) {
+				// 	try {
+				// 		console.log('unfocusFormControlFunc1')
+				// 		document["activeElement"].blur();
+				// 	}
+				// 	catch (e) {
+				// 	}
+				// }
 			}
 			if (typeof PointerEvent !== "undefined") {
 				document.addEventListener("pointerdown", unfocusFormControlFunc);
@@ -706,10 +713,11 @@
 		}
 		this.tryLockOrientation();
 		if (this.isiPhone && !this.isCordova) {
-			window.scrollTo(0, 0);
+			// window.scrollTo(0, 0);
 		}
 	}
 	Runtime.prototype.tryLockOrientation = function () {
+		console.log('unfocusFormControlFunc tryLockOrientation')
 		if (!this.autoLockOrientation || this.orientations === 0)
 			return;
 		var orientation = "portrait";
@@ -1153,6 +1161,7 @@
 	var audio_preload_totalsize = 0;
 	var audio_preload_started = false;
 	Runtime.prototype.getready = function () {
+		console.log('getready')
 		if (!this.audioInstance)
 			return;
 		audio_preload_totalsize = this.audioInstance.setPreloadList(this.audio_to_preload);
@@ -1192,6 +1201,7 @@
 	};
 	var isC2SplashDone = false;
 	Runtime.prototype.go = function () {
+		console.log('go')
 		if (!this.ctx && !this.glwrap)
 			return;
 		var ctx = this.ctx || this.overlay_ctx;
@@ -1456,6 +1466,7 @@
 			AppMobi["webview"]["execute"]("onGameReady();");
 	};
 	Runtime.prototype.tick = function (background_wake, timestamp, debug_step) {
+		// console.log('tick')
 		if (!this.running_layout)
 			return;
 		var nowtime = cr.performance_now();
@@ -1760,6 +1771,7 @@
 	};
 	Runtime.prototype.tickMe = function (inst) {
 		this.objects_to_tick.add(inst);
+		// console.log('tickMe this.objects_to_tick', this.objects_to_tick)
 	};
 	Runtime.prototype.tick2Me = function (inst) {
 		this.objects_to_tick2.add(inst);
@@ -1961,14 +1973,12 @@
 	};
 	var all_behaviors = [];
 	Runtime.prototype.createInstanceFromInit = function (initial_inst, layer, is_startup_instance, sx, sy, skip_siblings) {
+		// console.log('createInstanceFromInit')
 		var i, len, j, lenj, p, effect_fallback, x, y;
 		if (!initial_inst)
 			return null;
 		var type = this.types_by_index[initial_inst[1]];
-		;
-		;
 		var is_world = type.plugin.is_world;
-		;
 		if (this.isloading && is_world && !type.isOnLoaderLayout)
 			return null;
 		if (is_world && !this.glwrap && initial_inst[0][11] === 11)
@@ -2018,7 +2028,6 @@
 			inst.instance_vars[i] = initial_vars[i][0];
 		if (is_world) {
 			var wm = initial_inst[0];
-			;
 			inst.x = cr.is_undefined(sx) ? wm[0] : sx;
 			inst.y = cr.is_undefined(sy) ? wm[1] : sy;
 			inst.z = wm[2];
@@ -2885,7 +2894,6 @@
 	};
 	var triggerSheetIndex = -1;
 	Runtime.prototype.trigger = function (method, inst, value /* for fast triggers */) {
-		;
 		if (!this.running_layout)
 			return false;
 		var sheet = this.running_layout.event_sheet;

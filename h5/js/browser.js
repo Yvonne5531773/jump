@@ -14,6 +14,7 @@
 	var offlineScriptReady = false;
 	var browserPluginReady = false;
 	document.addEventListener("DOMContentLoaded", function () {
+		console.log('DOMContentLoaded')
 		if (window["C2_RegisterSW"] && navigator.serviceWorker) {
 			var offlineClientScript = document.createElement("script");
 			offlineClientScript.onload = function () {
@@ -50,6 +51,7 @@
 		browserInstance = this;
 		if (typeof navigator.onLine !== "undefined") {
 			window.addEventListener("online", function () {
+				console.log('online')
 				self.runtime.trigger(cr.plugins_.Browser.prototype.cnds.OnOnline, self);
 			});
 			window.addEventListener("offline", function () {
@@ -58,6 +60,7 @@
 		}
 		if (typeof window.applicationCache !== "undefined") {
 			window.applicationCache.addEventListener('updateready', function () {
+				console.log('updateready')
 				self.runtime.loadingprogress = 1;
 				self.runtime.trigger(cr.plugins_.Browser.prototype.cnds.OnUpdateReady, self);
 			});
@@ -67,6 +70,7 @@
 		}
 		if (!this.runtime.isDirectCanvas) {
 			document.addEventListener("appMobi.device.update.available", function () {
+				console.log('appMobi.device.update.available')
 				self.runtime.trigger(cr.plugins_.Browser.prototype.cnds.OnUpdateReady, self);
 			});
 			document.addEventListener("backbutton", function () {
