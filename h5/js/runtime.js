@@ -232,7 +232,8 @@
 		this.snapshotData = "";
 		this.objectRefTable = [];
 		this.requestProjectData();
-	};
+	}
+
 	Runtime.prototype.requestProjectData = function () {
 		var self = this;
 		if (this.isWKWebView) {
@@ -394,7 +395,7 @@
 				this.positionOverlayCanvas();
 				this.overlay_ctx = this.overlay_canvas.getContext("2d");
 			}
-			console.log('cr.GLWrap',cr.GLWrap)
+			console.log('cr.GLWrap', cr.GLWrap)
 			this.glwrap = new cr.GLWrap(this.gl, this.isMobile, this.enableFrontToBack);
 			this.glwrap.setSize(this.canvas.width, this.canvas.height);
 			this.glwrap.enable_mipmaps = (this.downscalingQuality !== 0);
@@ -794,10 +795,10 @@
 		this.suspend_events.push(f);
 	};
 	Runtime.prototype.GetObjectReference = function (i) {
-		;
 		return this.objectRefTable[i];
 	};
 	Runtime.prototype.loadProject = function (data_response) {
+		console.log('loadProject')
 		if (!data_response || !data_response["project"])
 			cr.logerror("Project model unavailable");
 		var pm = data_response["project"];
@@ -824,8 +825,7 @@
 				logo: loaderImage
 			};
 		}
-		else if (this.loaderstyle === 4)	// c2 splash
-		{
+		else if (this.loaderstyle === 4) {
 			var loaderC2logo_1024 = new Image();
 			loaderC2logo_1024.src = "";
 			var loaderC2logo_512 = new Image();
@@ -864,7 +864,6 @@
 		for (i = 0, len = pm[2].length; i < len; i++) {
 			m = pm[2][i];
 			p = this.GetObjectReference(m[0]);
-			;
 			cr.add_common_aces(m, p.prototype);
 			plugin = new p(this);
 			plugin.singleglobal = m[1];
@@ -872,7 +871,7 @@
 			plugin.is_rotatable = m[5];
 			plugin.must_predraw = m[9];
 			if (plugin.onCreate)
-				plugin.onCreate();  // opportunity to override default ACEs
+				plugin.onCreate();
 			cr.seal(plugin);
 			this.plugins.push(plugin);
 		}
@@ -1112,7 +1111,7 @@
 		this.start_time = Date.now();
 		cr.clearArray(this.objectRefTable);
 		this.initRendererAndLoader();
-	};
+	}
 	var anyImageHadError = false;
 	Runtime.prototype.waitForImageLoad = function (img_, src_) {
 		img_["cocoonLazyLoad"] = true;
@@ -3819,6 +3818,6 @@
 	cr.runtime = Runtime;
 	cr.createRuntime = function (canvasid) {
 		return new Runtime(document.getElementById(canvasid));
-	};
+	}
 	window["cr_createRuntime"] = cr.createRuntime;
 }());

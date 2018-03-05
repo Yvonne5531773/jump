@@ -1,7 +1,6 @@
 (function () {
 
-	cr.behaviors.Sin = function(runtime)
-	{
+	cr.behaviors.Sin = function(runtime) {
 		this.runtime = runtime;
 	};
 	var behaviorProto = cr.behaviors.Sin.prototype;

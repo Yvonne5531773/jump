@@ -1,20 +1,4 @@
 
-window["cr_getC2Runtime"] = function()
-{
-	var canvas = document.getElementById("c2canvas");
-	if (canvas)
-		return canvas["c2runtime"];
-	else if (window["c2runtime"])
-		return window["c2runtime"];
-	else
-		return null;
-}
-window["cr_setSuspended"] = function(s) {
-	var runtime = window["cr_getC2Runtime"]();
-	if (runtime)
-		runtime["setSuspended"](s);
-}
-
 cr.getObjectRefTable = function () {
 	return [
 		cr.plugins_.AJAX,

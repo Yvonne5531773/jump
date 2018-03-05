@@ -43,18 +43,32 @@ function offset(elem){
 	}
 	return obj;
 }
-if (typeof Object.getPrototypeOf !== "function")
-{
-	if (typeof "test".__proto__ === "object")
-	{
-		Object.getPrototypeOf = function(object) {
+
+if (typeof Object.getPrototypeOf !== "function") {
+	if (typeof "test".__proto__ === "object") {
+		Object.getPrototypeOf = function (object) {
 			return object.__proto__;
 		};
 	}
-	else
-	{
-		Object.getPrototypeOf = function(object) {
+	else {
+		Object.getPrototypeOf = function (object) {
 			return object.constructor.prototype;
 		};
 	}
+}
+
+window["cr_getC2Runtime"] = function() {
+	var canvas = document.getElementById("c2canvas");
+	if (canvas)
+		return canvas["c2runtime"];
+	else if (window["c2runtime"])
+		return window["c2runtime"];
+	else
+		return null;
+}
+
+window["cr_setSuspended"] = function(s) {
+	var runtime = window["cr_getC2Runtime"]();
+	if (runtime)
+		runtime["setSuspended"](s);
 }
