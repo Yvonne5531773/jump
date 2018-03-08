@@ -8,7 +8,7 @@ var aa, ba, ca, ea, fa, ga, ia, ka, z, ma, na, oa, pa, qa, ra, H, sa, ta, ua, xa
 			return f.constructor.prototype
 		}
 );
-(function() {
+(function() {  //cr
 		function f(a, b, c, e) {
 			this.set(a, b, c, e)
 		}
@@ -1105,7 +1105,7 @@ function uc(f, m, n, k) {
 		k[14] = -(n * r + b * p + a * f),
 		k[15] = 1)
 }
-(function() {
+(function() {  //glwarp
 		function f(c, e, b) {
 			this.Bf = /msie/i.test(navigator.userAgent) || /trident/i.test(navigator.userAgent);
 			this.height = this.width = 0;
@@ -2155,7 +2155,7 @@ function uc(f, m, n, k) {
 		tb = f
 	}
 )();
-(function() {
+(function() {  //runtime
 		function f(a) {
 			if (a && (a.getContext || a.dc) && !a.c2runtime) {
 				a.c2runtime = this;
@@ -4865,7 +4865,7 @@ window.cr_setSuspended = function(f) {
 	m && m.setSuspended(f)
 }
 ;
-(function() {
+(function() {  //layout
 		function f(a, b) {
 			this.b = a;
 			this.jh = null;
@@ -6032,7 +6032,7 @@ window.cr_setSuspended = function(f) {
 		bc = n
 	}
 )();
-(function() {
+(function() {  //eventStackFrame
 		function f(a, b) {
 			var c, e = a.length;
 			switch (e) {
@@ -6921,7 +6921,7 @@ window.cr_setSuspended = function(f) {
 		Wb = p
 	}
 )();
-(function() {
+(function() {  //expvalue
 		function f(d, c) {
 			this.eb = d;
 			this.b = d.b;
@@ -7365,7 +7365,6 @@ X.prototype.Fa = function() {
 	}
 	return f
 }
-;
 X.prototype.Ka = function(f) {
 	f = f.waits;
 	var m, n, k, d, g, h, c, e, b, a, l;
@@ -7411,8 +7410,7 @@ X.prototype.Ka = function(f) {
 			}
 		}
 }
-;
-(function() {
+(function() {  //sysExps
 		function f() {}
 		function m() {}
 		function n() {}
@@ -7967,7 +7965,7 @@ X.prototype.Ka = function(f) {
 		}
 	}
 )();
-(function() {
+(function() {  //cr
 		ub = function(f, n) {
 			var k = f[1]
 				, d = f[3]
@@ -8678,7 +8676,7 @@ var vc = {};
 function yc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //ajax
 		function f() {}
 		function m() {}
 		function n() {}
@@ -9024,7 +9022,7 @@ function zc(f) {
 function Ac(f) {
 	this.b = f
 }
-(function() {
+(function() {  //arr
 		function f() {
 			return c.length ? c.pop() : []
 		}
@@ -9247,7 +9245,7 @@ function Ac(f) {
 function Bc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //audio
 		function f(a) {
 			a = Math.pow(10, a / 20);
 			isFinite(a) || (a = 0);
@@ -10768,7 +10766,7 @@ function Bc(f) {
 function Z(f) {
 	this.b = f
 }
-(function() {
+(function() {  //browser
 		function f() {
 			h && c && window.OfflineClientInfo && window.OfflineClientInfo.SetMessageCallback(function(b) {
 				e.xD(b)
@@ -10935,7 +10933,7 @@ function Z(f) {
 function Cc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //dictionary
 		function f() {}
 		function m() {}
 		function n() {}
@@ -10997,7 +10995,7 @@ function Cc(f) {
 function xc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //function
 		function f() {
 			this.name = "";
 			this.Xk = 0;
@@ -11087,7 +11085,7 @@ function xc(f) {
 function Dc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //keyboard
 		function f() {}
 		var m = Dc.prototype;
 		m.M = function(d) {
@@ -12665,7 +12663,7 @@ try {
 function Hc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //localstorage
 		function f() {}
 		function m() {}
 		function n() {}
@@ -12766,7 +12764,7 @@ function Hc(f) {
 function Ic(f) {
 	this.b = f
 }
-(function() {
+(function() {  //mmPreloader
 		function f() {}
 		function m() {}
 		function n() {}
@@ -13222,7 +13220,7 @@ function Kc(f) {
 function Lc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //particles
 		function f(d) {
 			this.eb = d;
 			this.K = !1;
@@ -13518,7 +13516,7 @@ function Lc(f) {
 function Mc(f) {
 	this.b = f
 }
-(function() {
+(function() { //rexdate
 		function f() {}
 		function m() {}
 		var n = Mc.prototype;
@@ -13567,7 +13565,7 @@ function Mc(f) {
 function Nc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //rexhash
 		function f() {}
 		var m = Nc.prototype;
 		m.M = function(f) {
@@ -13675,7 +13673,7 @@ function Nc(f) {
 function Oc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //Rex_ZSorter
 		function f(h, c) {
 			var e = h.x
 				, b = h.y
@@ -13733,7 +13731,7 @@ function Oc(f) {
 function Y(f) {
 	this.b = f
 }
-(function() {
+(function() {  //sprite
 		function f() {
 			if (0 === this.xp.length) {
 				var a = document.createElement("canvas");
@@ -14374,7 +14372,7 @@ function Y(f) {
 function Pc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //text
 		function f() {
 			return c.length ? c.pop() : {}
 		}
@@ -14727,7 +14725,7 @@ function Pc(f) {
 function Qc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //textbox
 		function f() {}
 		function m() {}
 		var n = Qc.prototype;
@@ -14905,7 +14903,7 @@ function Qc(f) {
 function Jc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //TiledBg
 		function f() {}
 		var m = Jc.prototype;
 		m.M = function(f) {
@@ -15014,7 +15012,7 @@ function Jc(f) {
 function Rc(f) {
 	this.b = f
 }
-(function() {
+(function() {  //Touch
 		function f(c) {
 			e = c.x;
 			b = c.y;
