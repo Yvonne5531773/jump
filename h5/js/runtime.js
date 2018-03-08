@@ -2296,6 +2296,7 @@
 		this.getTypesCollisionCandidates(layer, jumpthru.my_types, bbox, candidates);
 	};
 	Runtime.prototype.testAndSelectCanvasPointOverlap = function (type, ptx, pty, inverted) {
+		console.log('testAndSelectCanvasPointOverlap testAndSelectCanvasPointOverlap')
 		var sol = type.getCurrentSol();
 		var i, j, inst, len;
 		var orblock = this.getCurrentEventStack().current_event.orblock;
