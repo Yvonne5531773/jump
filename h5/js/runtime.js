@@ -264,9 +264,9 @@
 			xhr = new ActiveXObject("Microsoft.XMLHTTP");
 		else
 			xhr = new XMLHttpRequest();
-		var datajs_filename = "data.json";
+		var datajs_filename = "./pre/data.js";
 		if (this.isWindows8App || this.isWindowsPhone8 || this.isWindowsPhone81 || this.isWindows10)
-			datajs_filename = "data.json";
+			datajs_filename = "./pre/data.json";
 		xhr.open("GET", datajs_filename, true);
 		var supportsJsonResponse = false;
 		if (!this.isDomFree && ("response" in xhr) && ("responseType" in xhr)) {
@@ -1017,6 +1017,7 @@
 			this.types_by_index.push(type_inst);
 			if (plugin.singleglobal) {
 				var instance = new plugin.Instance(type_inst);
+				console.log('type_inst', type_inst)
 				instance.uid = this.next_uid++;
 				instance.puid = this.next_puid++;
 				instance.iid = 0;

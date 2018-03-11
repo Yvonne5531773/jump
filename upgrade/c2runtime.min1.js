@@ -8,7 +8,7 @@ var aa, ba, ca, ea, fa, ga, ia, ka, z, ma, na, oa, pa, qa, ra, H, sa, ta, ua, xa
 			return f.constructor.prototype
 		}
 );
-(function() {  //cr
+(function() {
 		function f(a, b, c, e) {
 			this.set(a, b, c, e)
 		}
@@ -1105,7 +1105,7 @@ function uc(f, m, n, k) {
 		k[14] = -(n * r + b * p + a * f),
 		k[15] = 1)
 }
-(function() {  //glwarp
+(function() {
 		function f(c, e, b) {
 			this.Bf = /msie/i.test(navigator.userAgent) || /trident/i.test(navigator.userAgent);
 			this.height = this.width = 0;
@@ -2155,7 +2155,7 @@ function uc(f, m, n, k) {
 		tb = f
 	}
 )();
-(function() {  //runtime
+(function() {
 		function f(a) {
 			if (a && (a.getContext || a.dc) && !a.c2runtime) {
 				a.c2runtime = this;
@@ -4865,7 +4865,7 @@ window.cr_setSuspended = function(f) {
 	m && m.setSuspended(f)
 }
 ;
-(function() {  //layout
+(function() {
 		function f(a, b) {
 			this.b = a;
 			this.jh = null;
@@ -6032,7 +6032,7 @@ window.cr_setSuspended = function(f) {
 		bc = n
 	}
 )();
-(function() {  //eventStackFrame
+(function() {
 		function f(a, b) {
 			var c, e = a.length;
 			switch (e) {
@@ -6921,7 +6921,7 @@ window.cr_setSuspended = function(f) {
 		Wb = p
 	}
 )();
-(function() {  //expvalue
+(function() {
 		function f(d, c) {
 			this.eb = d;
 			this.b = d.b;
@@ -7365,6 +7365,7 @@ X.prototype.Fa = function() {
 	}
 	return f
 }
+;
 X.prototype.Ka = function(f) {
 	f = f.waits;
 	var m, n, k, d, g, h, c, e, b, a, l;
@@ -7410,7 +7411,8 @@ X.prototype.Ka = function(f) {
 			}
 		}
 }
-(function() {  //sysExps
+;
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -7965,7 +7967,7 @@ X.prototype.Ka = function(f) {
 		}
 	}
 )();
-(function() {  //cr
+(function() {
 		ub = function(f, n) {
 			var k = f[1]
 				, d = f[3]
@@ -8676,7 +8678,7 @@ var vc = {};
 function yc(f) {
 	this.b = f
 }
-(function() {  //ajax
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -9059,6 +9061,7 @@ function Ac(f) {
 			this.ic = this.A[2];
 			this.Vb || (this.Nd = f());
 			var c = this.Nd;
+			console.log('instanceProto.onCreate this', this)
 			c.length = this.Yb;
 			var b, a, d;
 			for (b = 0; b < this.Yb; b++)
@@ -9245,7 +9248,7 @@ function Ac(f) {
 function Bc(f) {
 	this.b = f
 }
-(function() {  //audio
+(function() {
 		function f(a) {
 			a = Math.pow(10, a / 20);
 			isFinite(a) || (a = 0);
@@ -10766,7 +10769,7 @@ function Bc(f) {
 function Z(f) {
 	this.b = f
 }
-(function() {  //browser
+(function() {
 		function f() {
 			h && c && window.OfflineClientInfo && window.OfflineClientInfo.SetMessageCallback(function(b) {
 				e.xD(b)
@@ -10933,7 +10936,7 @@ function Z(f) {
 function Cc(f) {
 	this.b = f
 }
-(function() {  //dictionary
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -10995,7 +10998,7 @@ function Cc(f) {
 function xc(f) {
 	this.b = f
 }
-(function() {  //function
+(function() {
 		function f() {
 			this.name = "";
 			this.Xk = 0;
@@ -11085,7 +11088,7 @@ function xc(f) {
 function Dc(f) {
 	this.b = f
 }
-(function() {  //keyboard
+(function() {
 		function f() {}
 		var m = Dc.prototype;
 		m.M = function(d) {
@@ -12663,7 +12666,7 @@ try {
 function Hc(f) {
 	this.b = f
 }
-(function() {  //localstorage
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -12764,7 +12767,7 @@ function Hc(f) {
 function Ic(f) {
 	this.b = f
 }
-(function() {  //mmPreloader
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -13220,7 +13223,7 @@ function Kc(f) {
 function Lc(f) {
 	this.b = f
 }
-(function() {  //particles
+(function() {
 		function f(d) {
 			this.eb = d;
 			this.K = !1;
@@ -13516,7 +13519,7 @@ function Lc(f) {
 function Mc(f) {
 	this.b = f
 }
-(function() { //rexdate
+(function() {
 		function f() {}
 		function m() {}
 		var n = Mc.prototype;
@@ -13565,7 +13568,7 @@ function Mc(f) {
 function Nc(f) {
 	this.b = f
 }
-(function() {  //rexhash
+(function() {
 		function f() {}
 		var m = Nc.prototype;
 		m.M = function(f) {
@@ -13673,7 +13676,7 @@ function Nc(f) {
 function Oc(f) {
 	this.b = f
 }
-(function() {  //Rex_ZSorter
+(function() {
 		function f(h, c) {
 			var e = h.x
 				, b = h.y
@@ -13731,7 +13734,7 @@ function Oc(f) {
 function Y(f) {
 	this.b = f
 }
-(function() {  //sprite
+(function() {
 		function f() {
 			if (0 === this.xp.length) {
 				var a = document.createElement("canvas");
@@ -14372,7 +14375,7 @@ function Y(f) {
 function Pc(f) {
 	this.b = f
 }
-(function() {  //text
+(function() {
 		function f() {
 			return c.length ? c.pop() : {}
 		}
@@ -14725,7 +14728,7 @@ function Pc(f) {
 function Qc(f) {
 	this.b = f
 }
-(function() {  //textbox
+(function() {
 		function f() {}
 		function m() {}
 		var n = Qc.prototype;
@@ -14903,7 +14906,7 @@ function Qc(f) {
 function Jc(f) {
 	this.b = f
 }
-(function() {  //TiledBg
+(function() {
 		function f() {}
 		var m = Jc.prototype;
 		m.M = function(f) {
@@ -15012,7 +15015,7 @@ function Jc(f) {
 function Rc(f) {
 	this.b = f
 }
-(function() {  //Touch
+(function() {
 		function f(c) {
 			e = c.x;
 			b = c.y;
@@ -15466,7 +15469,7 @@ function Rc(f) {
 function Sc(f) {
 	this.b = f
 }
-(function() {  //bullet
+(function() {
 		function f() {}
 		var m = Sc.prototype;
 		m.M = function(f) {
@@ -15579,7 +15582,7 @@ function Sc(f) {
 function Tc(f) {
 	this.b = f
 }
-(function() {  //fade
+(function() {
 		function f() {}
 		function m() {}
 		var n = Tc.prototype;
@@ -15684,7 +15687,7 @@ function Tc(f) {
 function Uc(f) {
 	this.b = f
 }
-(function() {  //los
+(function() {
 		function f() {}
 		var m = Uc.prototype;
 		m.M = function(c) {
@@ -15819,7 +15822,7 @@ function Uc(f) {
 function Vc(f) {
 	this.b = f
 }
-(function() {  //pin
+(function() {
 		function f() {}
 		var m = Vc.prototype;
 		m.M = function(f) {
@@ -15918,7 +15921,7 @@ function Vc(f) {
 function Wc(f) {
 	this.b = f
 }
-(function() {  //Rex_MoveTo
+(function() {
 		function f(d) {
 			null == d && (d = {});
 			d.x = 0;
@@ -16120,7 +16123,7 @@ function Wc(f) {
 function Xc(f) {
 	this.b = f
 }
-(function() {  //Rex_RotateTo
+(function() {
 		function f() {}
 		function m() {}
 		var n = Xc.prototype;
@@ -16361,7 +16364,7 @@ function Yc(f) {
 function ad(f) {
 	this.b = f
 }
-(function() {  //sin
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -16564,7 +16567,7 @@ function ad(f) {
 function cd(f) {
 	this.b = f
 }
-(function() {  //timer
+(function() {
 		function f() {}
 		function m() {}
 		function n() {}
@@ -16652,7 +16655,7 @@ function cd(f) {
 function dd(f) {
 	this.b = f
 }
-(function() {  //lunarray_Tween
+(function() {
 		function f(d, g) {
 			return (d /= g) < 1 / 2.75 ? 7.5625 * d * d + 0 : d < 2 / 2.75 ? 1 * (7.5625 * (d -= 1.5 / 2.75) * d + .75) + 0 : d < 2.5 / 2.75 ? 1 * (7.5625 * (d -= 2.25 / 2.75) * d + .9375) + 0 : 1 * (7.5625 * (d -= 2.625 / 2.75) * d + .984375) + 0
 		}
@@ -17448,7 +17451,7 @@ function fd(f) {
 	this.b = f;
 	this.ko = this.el = this.Uh = this.jo = 0
 }
-(function() {  //scrollto
+(function() {
 		function f() {}
 		var m = fd.prototype;
 		m.M = function(f) {

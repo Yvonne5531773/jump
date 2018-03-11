@@ -45,6 +45,7 @@
 		if (!this.recycled)
 			this.arr = allocArray();
 		var a = this.arr;
+		console.log('instanceProto.onCreate this', this)
 		a.length = this.cx;
 		var x, y, z;
 		for (x = 0; x < this.cx; x++) {
