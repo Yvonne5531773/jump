@@ -240,6 +240,11 @@
 		if (this.isWKWebView) {
 			var loadDataJsFn = function () {
 				self.loadProject(dataVM);
+				// self.fetchLocalFileViaCordovaAsText("./pre/data.js", function (str) {
+				// 	self.loadProject(JSON.parse(str));
+				// }, function (err) {
+				// 	alert("Error fetching data.js");
+				// });
 			};
 			if (this.httpServer) {
 				this.httpServer["startServer"]({
