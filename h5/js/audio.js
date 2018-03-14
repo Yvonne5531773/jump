@@ -1050,6 +1050,7 @@
 	};
 	C2AudioInstance.prototype.hasEnded = function () {
 		var time;
+		console.log('C2AudioInstance.prototype.hasEnded this.myapi', this.myapi)
 		switch (this.myapi) {
 			case API_HTML5:
 				return this.instanceObject.ended;
@@ -1059,10 +1060,13 @@
 						return false;
 					if (this.is_paused)
 						return false;
+					console.log('hasEnded this.hasPlaybackEnded', this.hasPlaybackEnded)
 					return this.hasPlaybackEnded;
 				}
-				else
+				else{
+					console.log('hasEnded this.instanceObject.ended', this.instanceObject.ended)
 					return this.instanceObject.ended;
+				}
 			case API_CORDOVA:
 				return this.hasPlaybackEnded;
 			case API_APPMOBI:
@@ -1241,6 +1245,7 @@
 		this.is_paused = false;
 	};
 	C2AudioInstance.prototype.stop = function () {
+		console.log('C2AudioInstance.prototype.stop')
 		switch (this.myapi) {
 			case API_HTML5:
 				if (!this.instanceObject.paused)
@@ -1433,6 +1438,7 @@
 		return ret;
 	};
 	C2AudioInstance.prototype.isPlaying = function () {
+		// console.log('isPlaying')
 		return !this.is_paused && !this.fresh && !this.stopped && !this.hasEnded();
 	};
 	C2AudioInstance.prototype.shouldSave = function () {
@@ -1548,6 +1554,7 @@
 		}
 	};
 	C2AudioInstance.prototype.setSuspended = function (s) {
+		console.log('C2AudioInstance.prototype.setSuspended')
 		switch (this.myapi) {
 			case API_HTML5:
 				if (s) {
@@ -1739,7 +1746,7 @@
 	};
 	var instanceProto = pluginProto.Instance.prototype;
 	instanceProto.onCreate = function () {
-		this.runtime.audioInstance = this;
+		// this.runtime.audioInstance = this;
 		timescale_mode = this.properties[0];	// 0 = off, 1 = sounds only, 2 = all
 		this.saveload = this.properties[1];		// 0 = all, 1 = sounds only, 2 = music only, 3 = none
 		this.playinbackground = (this.properties[2] !== 0);
@@ -1855,6 +1862,7 @@
 	};
 	var objectTrackerUidsToLoad = [];
 	instanceProto.loadFromJSON = function (o) {
+		console.log('audio loadFromJSON')
 		var setSilent = o["silent"];
 		masterVolume = o["masterVolume"];
 		this.listenerZ = o["listenerZ"];
@@ -2089,6 +2097,7 @@
 		return total_size;
 	};
 	instanceProto.startPreloads = function () {
+		console.log('audio startPreloads')
 		var i, len, p, src;
 		for (i = 0, len = preload_list.length; i < len; ++i) {
 			p = preload_list[i];
@@ -2125,6 +2134,7 @@
 		audioBuffers.length = j;
 	};
 	instanceProto.getAudioBuffer = function (src_, is_music, dont_create) {
+		console.log('getAudioBuffer src_', src_)
 		var i, len, a, ret = null, j, k, lenj, ai;
 		for (i = 0, len = audioBuffers.length; i < len; i++) {
 			a = audioBuffers[i];
@@ -2150,6 +2160,7 @@
 				return a;
 			}
 		}
+		console.log('audio getAudioInstance')
 		var b = this.getAudioBuffer(src_, is_music);
 		if (!b.bufferObject) {
 			if (tag !== "<preload>") {
@@ -2283,6 +2294,7 @@
 		this.nextPlayTime = 0;
 	};
 	Acts.prototype.PlayAtPosition = function (file, looping, vol, x_, y_, angle_, innerangle_, outerangle_, outergain_, tag) {
+		console.log('audio PlayAtPosition')
 		if (silent)
 			return;
 		var v = dbToLinear(vol);
@@ -2308,6 +2320,7 @@
 		this.nextPlayTime = 0;
 	};
 	Acts.prototype.PlayAtObject = function (file, looping, vol, obj, innerangle, outerangle, outergain, tag) {
+		console.log('audio PlayAtObject')
 		if (silent || !obj)
 			return;
 		var inst = obj.getFirstPicked();
@@ -2344,6 +2357,7 @@
 		this.nextPlayTime = 0;
 	};
 	Acts.prototype.PlayAtPositionByName = function (folder, filename, looping, vol, x_, y_, angle_, innerangle_, outerangle_, outergain_, tag) {
+		console.log('audio PlayAtPositionByName')
 		if (silent)
 			return;
 		var v = dbToLinear(vol);
@@ -2369,6 +2383,7 @@
 		this.nextPlayTime = 0;
 	};
 	Acts.prototype.PlayAtObjectByName = function (folder, filename, looping, vol, obj, innerangle, outerangle, outergain, tag) {
+		console.log('audio PlayAtObjectByName')
 		if (silent || !obj)
 			return;
 		var inst = obj.getFirstPicked();
@@ -2540,6 +2555,7 @@
 		addEffectForTag(tag, new PhaserEffect(freq, detune, q, mod, modfreq, mix));
 	};
 	Acts.prototype.AddConvolutionEffect = function (tag, file, norm, mix) {
+		console.log('audio AddConvolutionEffect')
 		if (api !== API_WEBAUDIO || !context["createConvolver"])
 			return;
 		var doNormalize = (norm === 0);
@@ -2658,6 +2674,7 @@
 		this.nextPlayTime = t;
 	};
 	Acts.prototype.UnloadAudio = function (file) {
+		console.log('UnloadAudio file', file)
 		var is_music = file[1];
 		var src = this.runtime.files_subfolder + file[0] + (useOgg ? ".ogg" : ".m4a");
 		var b = this.getAudioBuffer(src, is_music, true /* don't create if missing */);
@@ -2667,6 +2684,7 @@
 		cr.arrayFindRemove(audioBuffers, b);
 	};
 	Acts.prototype.UnloadAudioByName = function (folder, filename) {
+		console.log('UnloadAudioByName')
 		var is_music = (folder === 1);
 		var src = this.runtime.files_subfolder + filename.toLowerCase() + (useOgg ? ".ogg" : ".m4a");
 		var b = this.getAudioBuffer(src, is_music, true /* don't create if missing */);
@@ -2773,4 +2791,4 @@
 		ret.set_float(context ? context.currentTime : cr.performance_now());
 	};
 	pluginProto.exps = new Exps();
-}());
+})()

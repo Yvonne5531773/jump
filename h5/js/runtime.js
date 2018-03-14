@@ -239,12 +239,12 @@
 		var self = this;
 		if (this.isWKWebView) {
 			var loadDataJsFn = function () {
-				self.loadProject(dataVM);
-				// self.fetchLocalFileViaCordovaAsText("./pre/data.js", function (str) {
-				// 	self.loadProject(JSON.parse(str));
-				// }, function (err) {
-				// 	alert("Error fetching data.js");
-				// });
+				// self.loadProject(dataVM);
+				self.fetchLocalFileViaCordovaAsText("data.js", function (str) {
+					self.loadProject(JSON.parse(str));
+				}, function (err) {
+					alert("Error fetching data.js");
+				});
 			};
 			if (this.httpServer) {
 				this.httpServer["startServer"]({
@@ -269,9 +269,9 @@
 			xhr = new ActiveXObject("Microsoft.XMLHTTP");
 		else
 			xhr = new XMLHttpRequest();
-		var datajs_filename = "./pre/data.js";
+		var datajs_filename = "data.js";
 		if (this.isWindows8App || this.isWindowsPhone8 || this.isWindowsPhone81 || this.isWindows10)
-			datajs_filename = "./pre/data.json";
+			datajs_filename = "data.json";
 		xhr.open("GET", datajs_filename, true);
 		var supportsJsonResponse = false;
 		if (!this.isDomFree && ("response" in xhr) && ("responseType" in xhr)) {

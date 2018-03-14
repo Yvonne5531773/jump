@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Three Maze</title>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    </head>
+	<body>
+        <div class="three">
+            <div class="button-wrapper">
+                <button class="generate">
+                    Rebuild maze
+                </button>
+            </div>
+        </div>
+        <div class="caption">
+            Random mazes with <a href="http://threejs.org/">three.js</a> and <a href="https://github.com/sole/tween.js/">tween.js</a><br />
+            Use <strong>arrow keys</strong> to move, and the <strong>mouse</strong> to rotate the view
+        </div>
+        <script type="text/javascript" src="assets/js/libs/three.min.js"></script>
+        <script type="text/javascript" src="assets/js/libs/tween.min.js"></script>
+        <script type="text/javascript" src="threedance.js"></script>
+        <!--<script type="text/javascript" src="assets/js/threemaze.generate.js"></script>-->
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                var wrapper = document.querySelector('.three');
+                var button = document.querySelector('.generate');
+                new ThreeDance(wrapper, button);
+            }
+        </script>
+	</body>
+</html>

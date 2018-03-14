@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>3D Snake</title>
+	<script src="../three.min.js"></script>
+	<script type="text/javascript" src="../three-maze-gh-pages/assets/js/libs/tween.min.js"></script>
+	<!--<script src="optimer_bold.typeface.js"></script>-->
+	<!--<script src="dat.gui.js"></script>-->
+	<style>
+		#canvas3d{
+			margin:auto;
+			/*width: 960px;*/
+			/*height: 600px;*/
+		}
+	</style>
+</head>
+<body>
+<div id="canvas3d">
+</div>
+<script>
+	var renderer;
+	var camera;
+	var scene;
+	var light;
+	var cube = [];  //snake body object
+	var plane;
+	var fo; //food object
+
+	var nx = 40,
+		ny = 40,
+		size = 20,
+		start_point_x = 200,
+		start_point_y = 190;
+	var len = 1,
+		head_pos_x = 6,  //开始X
+		head_pos_y = 32, //开始Y
+		head_for = 2;    //方向
+	var dir_x = [0, -1, 1, 0]
+	var dir_y = [1, 0, 0, -1]
+	var status = -1;                //the status of the game, -1 represents not start
+	var pause_flag = false;         //in order to support pause function
+	var board = []                  //The state of game
+	var the_last_head = head_for;   //The direction of snake
+	var snake = []                  //store snake
+	var aRequest, gameover = false, cameraHelper
+
+	function Init() {
+		width = document.getElementById('canvas3d').clientWidth;
+		height = document.getElementById('canvas3d').clientHeight;
+		renderer = new THREE.WebGLRenderer({antialias: true});
+//		renderer.setSize(1080, 820);
+//		renderer.shadowMapEnabled = true;
+		document.getElementById('canvas3d').appendChild(renderer.domElement);
+		renderer.setClearColor('#feffdd', 1);
+
+		scene = new THREE.Scene();
+
+//		camera = new THREE.PerspectiveCamera(45, width / height, 1, 5000);
+		camera = new THREE.PerspectiveCamera(65, 1, 1, 2000);
+		camera.position.set(-180, -880, 350);
+		camera.up.x = 0;
+		camera.up.y = 0;
+		camera.up.z = 0;
+		camera.lookAt({x: 0, y: 0, z: 0});
+
+		//地板
+		plane = CreatePlane(400);
+		plane.position.set(-5, -5, -5);
+		plane.receiveShadow = true;
+		scene.add(plane);
+
+		light = new THREE.DirectionalLight('white', 1.0, 0);
+		light.position.set(-600, -600, -600);
+		scene.add(light);
+		var pointColor = "#fff";
+		var directionalLight = new THREE.DirectionalLight(pointColor, 0.5);
+		directionalLight.position.set(0, 0.5, 1);
+//		directionalLight.position.set(100, 180, 300); //控制阴影
+		directionalLight.castShadow = true;
+
+		directionalLight.distance = 0;
+		directionalLight.intensity = 0.8;
+		directionalLight.shadowMapHeight = 2048;
+		directionalLight.shadowMapWidth = 2048;
+		scene.add(directionalLight);
+
+		for (i = 0; i < nx; i++) { //0 = none, 1 = snake body, 2 = food
+			board[i] = []
+			for (k = 0; k < ny; k++) {
+				board[i][k] = 0;
+			}
+		}
+		fo = CreateCube(10, 10, 50);
+		fo.castShadow = true;
+		scene.add(fo);
+		document.addEventListener('keydown', onKeyDown, false);
+
+		for (i = 0; i < len; i++) {
+			snake[i] = {}
+			snake[i].x = head_pos_x + i * dir_x[3 - head_for];
+			snake[i].y = head_pos_y + i * dir_y[3 - head_for];
+			cube[i] = CreateCube(12, 12, 12);
+			cube[i].position.x = snake[i].x * 10 - start_point_x;
+			cube[i].position.y = -snake[i].y * 10 + start_point_y;
+			cube[i].castShadow = true;
+			scene.add(cube[i]);
+//			var tween = new TWEEN.Tween({scale: 0, y: 0, mesh: cube[i]}).to({
+//				scale: 1,
+//				y: 12 / 2
+//			}, 300).delay(150);
+//			tween.onUpdate(function () {
+//				this.mesh.scale.y = this.scale;
+//				this.mesh.position.y = this.y;
+//			});
+//			tween.onStart(function () {
+//				this.mesh.visible = true;
+//			});
+//			tween.start()
+			board[snake[i].x][snake[i].y] = 1;
+		}
+
+		// Camera helper
+		var geometry = new THREE.Geometry();
+		geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(Math.sqrt(3) * (this.side * this.thickness)), 0, 0);
+		cameraHelper = new THREE.Line(geometry);
+		scene.add(cameraHelper);
+		cameraHelper.visible = false;
+		cameraHelper.targetRotation = false;
+		cameraHelper.rotation.set(0, 1.362275, 0.694716);
+
+		status = 0;
+		food();
+		createBarricade()
+		run();
+		pause_flag = false;
+
+		onWindowResize()
+	}
+
+	function onWindowResize() {
+		var width = window.innerWidth || window.document.body.clientWidth;
+		var height = window.innerHeight || window.document.body.clientHeight;
+		renderer.setSize(width, height);
+		camera.aspect = width / height;
+		camera.updateProjectionMatrix();
+	};
+
+	function CreateCube(_s1, _s2, _s3) {
+		var geometry = new THREE.BoxGeometry(_s1, _s2, _s3, 1, 1, 1);
+		var material = new THREE.MeshLambertMaterial({color: '#ffe3ae' });
+		var ret = new THREE.Mesh(geometry, material);
+		ret.scale.y = 1;
+		ret.visible = true
+		return ret
+	}
+
+	function createBarricade() {
+		let mesh
+		let loader = new THREE.JSONLoader();
+//		let materials = new THREE.MeshLambertMaterial({color: '#fff87f'})
+		loader.load('./1.json', function(geometry, materials) {  //路障
+			mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+			mesh.scale.x = mesh.scale.y = mesh.scale.z = 6;
+			mesh.translation = THREE.GeometryUtils.center(geometry);
+			scene.add(mesh);
+			let tx = 6,
+				ty = 32
+			board[tx][ty] = 2;
+//			mesh.position.x = tx * 10 - start_point_x;
+//			mesh.position.y = -ty * 10 + start_point_y;
+			mesh.position.z = 2;
+			mesh.rotation.x -= 1.6;
+//			mesh.rotation.y -= SPEED;
+//			mesh.rotation.z -= SPEED * 3;
+		});
+	}
+
+	function CreatePlane(_size) { //地板
+		var geometry = new THREE.PlaneGeometry(_size, _size, 40, 40);
+		var material = new THREE.MeshLambertMaterial({color: '#feffdd'});
+		return new THREE.Mesh(geometry, material);
+	}
+
+	function render() {
+		for (var i = 0; i < len; ++i) {
+			cube[i].position.x = snake[i].x * 10 - start_point_x;
+			cube[i].position.y = -snake[i].y * 10 + start_point_y;
+		}
+		camera.position.y = -snake[0].y * 3 - 300; //随着线的运动，镜头跟着走
+		camera.position.x = snake[0].x * 3 - 100;
+		renderer.render(scene, camera);
+	}
+	function move() {
+		var tx = snake[0].x + dir_x[head_for];
+		var ty = snake[0].y + dir_y[head_for];
+		if (tx >= 0 && tx < nx && ty >= 0 && ty < ny) {
+			if (board[tx][ty] !== 1) {
+				the_last_head = head_for;
+				snake[len] = {}
+				snake[len].x = snake[len - 1].x;
+				snake[len].y = snake[len - 1].y;
+				cube[len] = CreateCube(12, 12, 12);
+				cube[len].position.x = snake[len].x * 10 - start_point_x;
+				cube[len].position.y = -snake[len].y * 10 + start_point_y;
+				cube[len].castShadow = true;
+				scene.add(cube[len]);
+				board[tx][ty] = 1;
+				len++;
+				if (board[tx][ty] === 2) {
+					snake[len] = {}
+					snake[len].x = snake[len - 1].x;
+					snake[len].y = snake[len - 1].y;
+					cube[len] = CreateCube(12, 12, 12);
+					cube[len].position.x = snake[len].x * 10 - start_point_x;
+					cube[len].position.y = -snake[len].y * 10 + start_point_y;
+					cube[len].castShadow = true;
+					scene.add(cube[len]);
+					board[tx][ty] = 1;
+					len++;
+					food();
+				}
+				for (i = len - 1; i > 0; i--) {
+					snake[i].x = snake[i - 1].x;
+					snake[i].y = snake[i - 1].y;
+				}
+				snake[0].x = tx;
+				snake[0].y = ty;
+			}
+			else {
+				if (the_last_head + head_for !== 3) {
+					console.log('over 1')
+					over()
+//					location.reload();
+				}
+				else {
+					head_for = the_last_head;
+				}
+			}
+		} else {
+			console.log('over 2')
+			over()
+//			location.reload();
+		}
+		for (i = 0; i < nx; i++) {
+			for (k = 0; k < ny; k++) {
+				if (board[i][k] == 1)
+					board[i][k] = 0;
+			}
+		}
+		for (i = 0; i < len; i++) {
+			board[snake[i].x][snake[i].y] = 1;
+		}
+	}
+
+	function food() {
+		var tx, ty;
+		do {
+			tx = Math.ceil(Math.random() * 1000) % nx;
+			ty = Math.ceil(Math.random() * 1000) % ny;
+		} while (board[tx][ty]);
+		board[tx][ty] = 2;
+		fo.position.x = tx * 10 - start_point_x;
+		fo.position.y = -ty * 10 + start_point_y;
+		fo.position.z = 20;
+	}
+
+	function over() {
+		console.log("game over!\ryour score is " + len);
+		gameover = true
+	}
+
+	var fps = 25;
+	var now;
+	var then = Date.now();
+	var interval = 1000 / fps;
+	var delta;
+	function run() {
+		aRequest = window.requestAnimationFrame(run)
+		TWEEN.update();
+		now = Date.now();
+		delta = now - then;
+		if (delta > interval) {
+			then = now - (delta % interval);
+			if (!pause_flag)
+				move();
+			render();
+			if(gameover)
+				window.cancelAnimationFrame(aRequest)
+		}
+	}
+
+	function onKeyDown(event) {
+		if (status == -1) {
+			status = 0;
+			food();
+			run();
+		}
+		if (window.event){
+			keynum = event.keyCode;
+		}
+		else if (event.which) {
+			keynum = event.which;
+		}
+		if (keynum == 38 && head_for != 0)
+			head_for = 3;
+		if (keynum == 40 && head_for != 3)
+			head_for = 0;
+		if (keynum == 37 && head_for != 2)
+			head_for = 1;
+		if (keynum == 39 && head_for != 1)
+			head_for = 2;
+		if (keynum == 80)
+			pause_flag = !pause_flag;
+		if (keynum != 80)
+			pause_flag = false;
+	}
+
+	window.onload=Init;
+</script>
+</body>
+</html>
