@@ -63,13 +63,13 @@ function initMesh() {
 	// 	mesh.translation = THREE.GeometryUtils.center(geometry);
 	// 	scene.add(mesh);
 	// });
-	loader.load('./4.json', function(geometry, materials) {  //单路障
-		mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-		mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.05;
-		mesh.translation = THREE.GeometryUtils.center(geometry);
-		scene.add(mesh);
-		mesh.rotation.x -= 3;
-	});
+	// loader.load('./4.json', function(geometry, materials) {  //单路障
+	// 	mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+	// 	mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.05;
+	// 	mesh.translation = THREE.GeometryUtils.center(geometry);
+	// 	scene.add(mesh);
+	// 	mesh.rotation.x -= 3;
+	// });
 	// loader.load('./5.json', function(geometry, materials) {  //垂直线
 	// 	mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 	// 	mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.1;
@@ -82,12 +82,12 @@ function initMesh() {
 	// 	mesh.translation = THREE.GeometryUtils.center(geometry);
 	// 	scene.add(mesh);
 	// });
-	// loader.load('./7.json', function(geometry, materials) { //钢琴细黑条
-	// 	mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-	// 	mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.1;
-	// 	mesh.translation = THREE.GeometryUtils.center(geometry);
-	// 	scene.add(mesh);
-	// });
+	loader.load('./7.json', function(geometry, materials) { //钢琴细黑条
+		mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+		mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.1;
+		mesh.translation = THREE.GeometryUtils.center(geometry);
+		scene.add(mesh);
+	});
 	// loader.load('./8.json', function(geometry, materials) {  //三角
 	// 	mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 	// 	mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.1;

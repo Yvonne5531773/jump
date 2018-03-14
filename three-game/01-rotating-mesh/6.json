@@ -3,7 +3,7 @@
     "materials":[{
         "emissive":0,
         "depthWrite":true,
-        "color":10724259,
+        "color":"#fff",
         "type":"MeshPhongMaterial",
         "skinning":true,
         "depthTest":true,
